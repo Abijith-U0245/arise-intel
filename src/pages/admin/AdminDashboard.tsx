@@ -4,7 +4,7 @@ import { StatCard } from '@/components/arise/StatCard';
 import { ClassAnalyticsChart } from '@/components/arise/ClassAnalyticsChart';
 import { GlowingBadge } from '@/components/arise/GlowingBadge';
 import { departments, classes, allStudents, getRiskDistribution } from '@/data/mockData';
-import { Shield, Users, GraduationCap, Building2, AlertTriangle, BarChart3, Settings, Brain } from 'lucide-react';
+import { Users, GraduationCap, Building2, AlertTriangle, BarChart3, Settings } from 'lucide-react';
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from 'recharts';
 
 const navItems = [
