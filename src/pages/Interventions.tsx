@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { GlowingBadge } from "@/components/arise/GlowingBadge";
-import { Zap, CheckCircle, Clock, AlertTriangle, TrendingDown, ArrowRight } from "lucide-react";
+import { Zap, CheckCircle, Clock, TrendingDown, ArrowRight } from "lucide-react";
 
 const workflows = [
   {
