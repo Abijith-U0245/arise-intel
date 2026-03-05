@@ -3,7 +3,7 @@ import { getBlockchain } from "../api/backend";
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { GlowingBadge } from "@/components/arise/GlowingBadge";
-import { BlockchainBadge } from "@/components/arise/BlockchainBadge";
+
 import { User, TrendingDown, Calendar, MessageSquare, Shield, Clock, CheckCircle, AlertTriangle } from "lucide-react";
 import {
   LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,

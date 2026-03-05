@@ -46,7 +46,7 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
     this.logError(error, errorInfo);
   }
 
-  private logError(error: Error, errorInfo: ErrorInfo): void {
+  private logError(_error: Error, _errorInfo: ErrorInfo): void {
     // In production, this would send to an error tracking service
     // like Sentry, LogRocket, or custom logging endpoint
     if (import.meta.env.PROD) {

@@ -4,6 +4,58 @@
  */
 
 // ============================================================================
+// USER ROLES & AUTHENTICATION
+// ============================================================================
+
+export type UserRole = 'student' | 'faculty' | 'hod' | 'admin';
+
+export interface MockUser {
+  id: string;
+  email: string;
+  password: string;
+  role: UserRole;
+  name: string;
+  department?: string;
+  classId?: string;
+  erpId?: string;
+  phone?: string;
+  avatar?: string;
+}
+
+// ============================================================================
+// DEPARTMENT & CLASS STRUCTURE
+// ============================================================================
+
+export interface DepartmentData {
+  id: string;
+  name: string;
+  code: string;
+  totalStudents: number;
+  totalFaculty: number;
+  hod: string;
+  hodId: string;
+  classes: string[];
+  avgRisk: number;
+  avgAttendance: number;
+  avgPerformance: number;
+}
+
+export interface ClassData {
+  id: string;
+  name: string;
+  department: string;
+  departmentCode: string;
+  studentCount: number;
+  faculty: string[];
+  facultyIds: string[];
+  avgRisk: number;
+  avgAttendance: number;
+  avgPerformance: number;
+  batchYear: number;
+  semester: number;
+}
+
+// ============================================================================
 // RISK LEVELS
 // ============================================================================
 
@@ -17,65 +69,105 @@ export interface RiskThresholds {
 }
 
 // ============================================================================
-// STUDENT PROFILE
+// SUBJECT & ACADEMIC RECORDS
 // ============================================================================
 
-export interface StudentProfile {
+export interface Subject {
   id: string;
-  studentId: string;
-  firstName: string;
-  lastName: string;
-  email: string;
-  program: string;
-  major: string;
-  year: number;
-  enrollmentDate: string;
-  status: 'active' | 'inactive' | 'graduated' | 'withdrawn';
-  riskScore: number;
-  riskLevel: RiskLevel;
-  lastUpdated: string;
-}
-
-export interface StudentAcademicRecord {
-  studentId: string;
-  gpa: number;
-  creditsAttempted: number;
-  creditsEarned: number;
-  courses: CourseRecord[];
-  semesterHistory: SemesterRecord[];
-}
-
-export interface CourseRecord {
-  courseId: string;
-  courseName: string;
-  semester: string;
-  grade: string;
+  name: string;
+  code: string;
+  faculty: string;
+  facultyId: string;
   credits: number;
-  instructor: string;
+  type: 'theory' | 'lab' | 'project';
 }
 
-export interface SemesterRecord {
-  semester: string;
-  year: number;
-  gpa: number;
-  credits: number;
-  standing: 'good' | 'warning' | 'probation';
+export interface SubjectScore {
+  subjectId: string;
+  subjectName: string;
+  subjectCode: string;
+  faculty: string;
+  ia1: number;
+  ia2: number;
+  ia3: number;
+  avgIA: number;
+  assignmentScore: number;
+  quizScore: number;
+  labScore: number;
+  attendance: number;
+  grade: 'A' | 'B' | 'C' | 'D' | 'F';
+}
+
+export interface IAScores {
+  ia1: number;
+  ia2: number;
+  ia3: number;
+  avg: number;
+}
+
+export interface AttendanceRecord {
+  subjectId: string;
+  subjectName: string;
+  attended: number;
+  total: number;
+  percentage: number;
 }
 
 // ============================================================================
-// ACADEMIC RISK
+// COMPETITIONS & ACTIVITIES
 // ============================================================================
 
-export interface AcademicRisk {
-  studentId: string;
-  riskScore: number;
-  riskLevel: RiskLevel;
-  riskFactors: RiskFactor[];
-  prediction: RiskPrediction;
+export type CompetitionType = 'hackathon' | 'coding' | 'symposium' | 'paper' | 'workshop' | 'project';
+export type CompetitionStatus = 'participated' | 'won' | 'runner_up' | 'not_participated';
+export type CertificateStatus = 'issued' | 'pending' | 'not_applicable';
+
+export interface Competition {
+  id: string;
+  name: string;
+  type: CompetitionType;
+  organizer: string;
+  date: string;
+  status: CompetitionStatus;
+  position?: string;
+  score?: number;
+  certificateStatus: CertificateStatus;
+  certificateUrl?: string;
+  teamSize: number;
+  description: string;
+}
+
+// ============================================================================
+// ACTIVITY TIMELINE
+// ============================================================================
+
+export type ActivityType = 
+  | 'assignment_submitted'
+  | 'quiz_completed'
+  | 'competition_participated'
+  | 'attendance_update'
+  | 'faculty_feedback'
+  | 'intervention_triggered'
+  | 'intervention_completed'
+  | 'risk_alert'
+  | 'profile_update'
+  | 'password_changed'
+  | 'login'
+  | 'logout';
+
+export interface ActivityLog {
+  id: string;
+  userId: string;
+  type: ActivityType;
+  title: string;
+  description: string;
   timestamp: string;
-  modelVersion: string;
-  confidence: number;
+  metadata?: Record<string, unknown>;
+  icon?: string;
 }
+
+// ============================================================================
+// AI RISK ANALYTICS
+// ============================================================================
 
 export interface RiskFactor {
   name: string;
@@ -92,6 +184,157 @@ export interface RiskPrediction {
   forecast12Week: number;
   dropoutProbability: number;
   keyTriggers: string[];
+}
+
+export interface AIRiskAnalytics {
+  studentId: string;
+  riskScore: number;
+  riskLevel: RiskLevel;
+  riskFactors: RiskFactor[];
+  prediction: RiskPrediction;
+  interventionSuggestions: string[];
+  timestamp: string;
+  modelVersion: string;
+  confidence: number;
+}
+
+// ============================================================================
+// STUDENT PROFILE (COMPREHENSIVE)
+// ============================================================================
+
+export interface StudentProfile {
+  id: string;
+  studentId: string;
+  erpId: string;
+  firstName: string;
+  lastName: string;
+  name: string;
+  email: string;
+  phone: string;
+  department: string;
+  departmentCode: string;
+  classId: string;
+  className: string;
+  facultyAdvisor: string;
+  facultyAdvisorId: string;
+  academicYear: number;
+  semester: number;
+  batchYear: number;
+  enrollmentDate: string;
+  status: 'active' | 'inactive' | 'graduated' | 'withdrawn';
+  avatar?: string;
+  address?: string;
+  dateOfBirth?: string;
+  gender?: 'male' | 'female' | 'other';
+}
+
+export interface StudentData {
+  profile: StudentProfile;
+  attendance: {
+    overall: number;
+    subjectWise: AttendanceRecord[];
+    weeklyTrend: number[];
+  };
+  academics: {
+    subjects: SubjectScore[];
+    overallGrade: string;
+    cgpa: number;
+    sgpa: number;
+  };
+  competitions: Competition[];
+  riskAnalytics: AIRiskAnalytics;
+  activityLog: ActivityLog[];
+  notifications: Notification[];
+  // Legacy fields for backward compatibility
+  id: string;
+  name: string;
+  erpId: string;
+  classId: string;
+  department: string;
+  attendance_legacy: number;
+  assignmentScore: number;
+  gpa: number;
+  riskScore: number;
+  riskLevel: 'safe' | 'monitor' | 'high';
+  sentiment: 'positive' | 'neutral' | 'negative';
+  sentimentKeywords: string[];
+  facultyFeedback: string;
+  interventions: string[];
+  weeklyAttendance: number[];
+  weeklyPerformance: number[];
+}
+
+// ============================================================================
+// FACULTY PROFILE
+// ============================================================================
+
+export interface FacultyProfile {
+  id: string;
+  facultyId: string;
+  name: string;
+  email: string;
+  phone: string;
+  department: string;
+  departmentCode: string;
+  designation: string;
+  specialization: string;
+  joinDate: string;
+  assignedClasses: string[];
+  assignedSubjects: string[];
+  avatar?: string;
+}
+
+// ============================================================================
+// HOD PROFILE
+// ============================================================================
+
+export interface HODProfile {
+  id: string;
+  hodId: string;
+  name: string;
+  email: string;
+  phone: string;
+  department: string;
+  departmentCode: string;
+  joinDate: string;
+  facultyCount: number;
+  studentCount: number;
+  avatar?: string;
+}
+
+// ============================================================================
+// ADMIN PROFILE
+// ============================================================================
+
+export interface AdminProfile {
+  id: string;
+  adminId: string;
+  name: string;
+  email: string;
+  phone: string;
+  role: 'super_admin' | 'admin';
+  joinDate: string;
+  permissions: string[];
+  avatar?: string;
+}
+
+// ============================================================================
+// NOTIFICATIONS
+// ============================================================================
+
+export type NotificationType = 'risk_alert' | 'intervention' | 'academic' | 'system' | 'general';
+export type NotificationPriority = 'low' | 'medium' | 'high' | 'urgent';
+
+export interface Notification {
+  id: string;
+  userId: string;
+  type: NotificationType;
+  priority: NotificationPriority;
+  title: string;
+  message: string;
+  timestamp: string;
+  read: boolean;
+  actionUrl?: string;
 }
 
 // ============================================================================
@@ -253,26 +496,8 @@ export interface Alert {
 }
 
 // ============================================================================
-// ATTENDANCE & ENGAGEMENT
+// ENGAGEMENT METRICS
 // ============================================================================
-
-export interface AttendanceRecord {
-  studentId: string;
-  courseId: string;
-  date: string;
-  status: 'present' | 'absent' | 'late' | 'excused';
-}
-
-export interface AttendanceTrend {
-  studentId: string;
-  weeklyData: {
-    week: string;
-    attendanceRate: number;
-    sessionsAttended: number;
-    totalSessions: number;
-  }[];
-  overallTrend: 'improving' | 'stable' | 'declining';
-}
 
 export interface EngagementMetrics {
   studentId: string;
