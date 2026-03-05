@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { AlertTriangle, CheckCircle, Clock } from 'lucide-react';
-import { cn } from '@/lib/utils';
+
 
 interface InterventionAlertCardProps {
   interventions: string[];
