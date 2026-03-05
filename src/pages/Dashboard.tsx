@@ -1,3 +1,6 @@
+import { sendRiskPrediction } from "../api/backend";
+import { getBlockchain } from "../api/backend";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { StatCard } from "@/components/arise/StatCard";
 import { GlowingBadge } from "@/components/arise/GlowingBadge";
@@ -56,6 +59,13 @@ const CustomTooltip = ({ active, payload, label }: any) => {
 };
 
 const Dashboard = () => {
+  const [chain, setChain] = useState<any[]>([]);
+  useEffect(() => {
+    getBlockchain().then((data) => {
+      setChain(data);
+    });
+  }, []);
+  const latestBlock = chain[chain.length - 1];
   return (
     <div className="min-h-screen bg-background pt-20 pb-12 px-4 sm:px-6">
       <div className="max-w-7xl mx-auto">
@@ -70,6 +80,9 @@ const Dashboard = () => {
             <GlowingBadge level="high" pulse>Live</GlowingBadge>
           </div>
           <p className="text-muted-foreground text-sm">Real-time academic risk intelligence across all enrolled students</p>
+          <div className="mt-2 text-xs text-muted-foreground break-all">
+🔗 Blockchain Verified: {latestBlock ? latestBlock.hash : "Loading..."}
+</div>
         </motion.div>
 
         {/* Stats */}

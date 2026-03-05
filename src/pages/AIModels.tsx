@@ -1,3 +1,4 @@
+import { sendRiskPrediction } from "../api/backend";
 import { motion } from "framer-motion";
 import { GlowingBadge } from "@/components/arise/GlowingBadge";
 import { Brain, RefreshCw, AlertTriangle, CheckCircle } from "lucide-react";

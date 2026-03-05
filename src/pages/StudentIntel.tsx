@@ -1,3 +1,6 @@
+import { sendRiskPrediction } from "../api/backend";
+import { getBlockchain } from "../api/backend";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { GlowingBadge } from "@/components/arise/GlowingBadge";
 import { BlockchainBadge } from "@/components/arise/BlockchainBadge";
