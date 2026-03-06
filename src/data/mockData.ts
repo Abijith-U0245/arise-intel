@@ -828,6 +828,68 @@ export function getCollegeStats() {
   };
 }
 
+export function getStudentById(studentId: string) {
+  return allStudents.find(s => s.id === studentId || s.erpId === studentId);
+}
+
+export function getStudentAcademicProfile(studentId: string) {
+  const student = allStudents.find(s => s.id === studentId || s.erpId === studentId);
+  if (!student) return null;
+  return {
+    subjects: student.academics?.subjects || [],
+    overallGrade: student.academics?.overallGrade || 'N/A',
+    cgpa: student.academics?.cgpa || student.gpa || 0,
+    sgpa: student.academics?.sgpa || 0,
+    semesters: [],
+    iaScores: student.academics?.subjects?.map((s: any) => ({
+      subject: s.subject || s.name || 'Unknown',
+      score: s.iaScore || 0,
+      maxScore: 20,
+    })) || [],
+  };
+}
+
+export function getStudentAttendance(studentId: string) {
+  const student = allStudents.find(s => s.id === studentId || s.erpId === studentId);
+  if (!student) return null;
+  return {
+    overall: student.attendance?.overall || student.attendance_legacy || 0,
+    monthly: [],
+    subjects: student.attendance?.subjectWise?.map((s: any) => ({
+      subject: s.subjectName || s.subject || 'Unknown',
+      percentage: s.percentage || 0,
+    })) || [],
+  };
+}
+
+export function getStudentAssignments(studentId: string) {
+  const student = allStudents.find(s => s.id === studentId || s.erpId === studentId);
+  if (!student) return [];
+  
+  return student.academics?.subjects?.map((subj: any) => ({
+    title: `${subj.subject || subj.name || 'Unknown'} Assignment`,
+    subject: subj.subject || subj.name || 'Unknown',
+    status: subj.assignmentScore > 80 ? 'submitted' : subj.assignmentScore > 60 ? 'pending' : 'late',
+    score: subj.assignmentScore,
+    dueDate: new Date().toISOString().split('T')[0],
+  })) || [];
+}
+
+export function getStudentCompetitions(_studentId: string) {
+  // Return mock competitions for any student
+  return [
+    { name: 'Hackathon 2024', organizer: 'Codefest', status: 'completed', date: '2024-03-15', teamSize: 4, description: '24-hour coding competition', certificateStatus: 'received' },
+    { name: 'Paper Presentation', organizer: 'IEEE', status: 'completed', date: '2024-02-20', teamSize: 2, description: 'Technical paper on AI', certificateStatus: 'received' },
+    { name: 'Robotics Challenge', organizer: 'RoboTech', status: 'ongoing', date: '2024-05-10', teamSize: 5, description: 'Autonomous robot design', certificateStatus: 'pending' },
+  ];
+}
+
+export function getRiskAnalytics(studentId: string) {
+  const student = allStudents.find(s => s.id === studentId || s.erpId === studentId);
+  if (!student) return null;
+  return student.riskAnalytics;
+}
+
 // Demo accounts summary for login page
 export const demoAccounts = [
   { label: 'Admin', email: 'admin@arise.edu', password: 'demo123', role: 'System Administrator' },
