@@ -60,14 +60,14 @@ const Index = () => {
 
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12">
               <Button variant="hero" size="xl" asChild>
-                <Link to="/dashboard">
+                <Link to="/login">
                   <BarChart3 className="h-5 w-5" />
-                  View Live Dashboard
+                  Access Dashboard
                 </Link>
               </Button>
               <Button variant="hero-outline" size="xl" asChild>
-                <Link to="/student">
-                  See Risk Prediction
+                <Link to="/features">
+                  Explore Features
                   <ChevronRight className="h-5 w-5" />
                 </Link>
               </Button>

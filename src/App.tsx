@@ -22,6 +22,9 @@ import FacultyManagement from "./pages/admin/FacultyManagement";
 import StudentManagement from "./pages/admin/StudentManagement";
 import GlobalAnalytics from "./pages/admin/GlobalAnalytics";
 import SystemSettings from "./pages/admin/SystemSettings";
+import AddStudent from "./pages/admin/AddStudent";
+import AddDepartment from "./pages/admin/AddDepartment";
+import AddHOD from "./pages/admin/AddHOD";
 
 // HOD pages
 import HodDashboard from "./pages/hod/HodDashboard";
@@ -35,6 +38,7 @@ import MyClassPage from "./pages/faculty/MyClassPage";
 import PerformancePage from "./pages/faculty/PerformancePage";
 import AttendancePage from "./pages/faculty/AttendancePage";
 import FeedbackPage from "./pages/faculty/FeedbackPage";
+import FacultyStudentProfile from "./pages/faculty/StudentProfile";
 
 // Student pages
 import StudentDashboard from "./pages/student/StudentDashboard";
@@ -78,6 +82,9 @@ const AppRoutes = () => (
     <Route path="/admin/students" element={<ProtectedRoute allowedRoles={['admin']}><StudentManagement /></ProtectedRoute>} />
     <Route path="/admin/analytics" element={<ProtectedRoute allowedRoles={['admin']}><GlobalAnalytics /></ProtectedRoute>} />
     <Route path="/admin/system" element={<ProtectedRoute allowedRoles={['admin']}><SystemSettings /></ProtectedRoute>} />
+    <Route path="/admin/add-student" element={<ProtectedRoute allowedRoles={['admin']}><AddStudent /></ProtectedRoute>} />
+    <Route path="/admin/add-department" element={<ProtectedRoute allowedRoles={['admin']}><AddDepartment /></ProtectedRoute>} />
+    <Route path="/admin/add-hod" element={<ProtectedRoute allowedRoles={['admin']}><AddHOD /></ProtectedRoute>} />
     <Route path="/admin/profile" element={<ProtectedRoute allowedRoles={['admin']}><ProfilePage /></ProtectedRoute>} />
     <Route path="/admin/change-password" element={<ProtectedRoute allowedRoles={['admin']}><ChangePasswordPage /></ProtectedRoute>} />
 
@@ -91,6 +98,7 @@ const AppRoutes = () => (
 
     {/* Faculty routes */}
     <Route path="/faculty/dashboard" element={<ProtectedRoute allowedRoles={['faculty']}><FacultyDashboard /></ProtectedRoute>} />
+    <Route path="/faculty/student/:studentId" element={<ProtectedRoute allowedRoles={['faculty']}><FacultyStudentProfile /></ProtectedRoute>} />
     <Route path="/faculty/class" element={<ProtectedRoute allowedRoles={['faculty']}><MyClassPage /></ProtectedRoute>} />
     <Route path="/faculty/performance" element={<ProtectedRoute allowedRoles={['faculty']}><PerformancePage /></ProtectedRoute>} />
     <Route path="/faculty/attendance" element={<ProtectedRoute allowedRoles={['faculty']}><AttendancePage /></ProtectedRoute>} />
@@ -107,6 +115,12 @@ const AppRoutes = () => (
     <Route path="/student/support" element={<ProtectedRoute allowedRoles={['student']}><SupportPage /></ProtectedRoute>} />
     <Route path="/student/profile" element={<ProtectedRoute allowedRoles={['student']}><ProfilePage /></ProtectedRoute>} />
     <Route path="/student/change-password" element={<ProtectedRoute allowedRoles={['student']}><ChangePasswordPage /></ProtectedRoute>} />
+
+    {/* Role base route fallbacks */}
+    <Route path="/admin" element={<Navigate to="/admin/dashboard" replace />} />
+    <Route path="/hod" element={<Navigate to="/hod/dashboard" replace />} />
+    <Route path="/faculty" element={<Navigate to="/faculty/dashboard" replace />} />
+    <Route path="/student" element={<Navigate to="/student/dashboard" replace />} />
 
     {/* Catch all */}
     <Route path="*" element={<NotFound />} />

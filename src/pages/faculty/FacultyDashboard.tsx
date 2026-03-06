@@ -3,12 +3,12 @@ import { useAuth } from '@/contexts/AuthContext';
 import { RoleLayout } from '@/components/arise/RoleLayout';
 import { StatCard } from '@/components/arise/StatCard';
 import { GlowingBadge } from '@/components/arise/GlowingBadge';
-import { AttendanceHeatmap } from '@/components/arise/AttendanceHeatmap';
 import { RiskAlertsWidget } from '@/components/arise/RiskAlertsWidget';
 import { RiskEventSimulator } from '@/components/arise/RiskEventSimulator';
 import { getFacultyByEmail, getFacultyStudents, getRiskDistribution, classes, departments } from '@/data/mockData';
-import { Users, AlertTriangle, TrendingDown, MessageSquare, BarChart3, Calendar, GraduationCap, BookOpen } from 'lucide-react';
-import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, BarChart, Bar, XAxis, YAxis, CartesianGrid } from 'recharts';
+import { Users, AlertTriangle, TrendingDown, MessageSquare, BarChart3, Calendar, Eye } from 'lucide-react';
+import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from 'recharts';
+import { useNavigate } from 'react-router-dom';
 
 const navItems = [
   { path: '/faculty/dashboard', label: 'My Class', icon: Users },
@@ -19,6 +19,7 @@ const navItems = [
 
 const FacultyDashboard = () => {
   const { user } = useAuth();
+  const navigate = useNavigate();
   const faculty = user?.email ? getFacultyByEmail(user.email) : undefined;
   
   // Get faculty's assigned class
@@ -226,6 +227,7 @@ const FacultyDashboard = () => {
                 <th className="pb-3 text-muted-foreground font-medium">Attendance</th>
                 <th className="pb-3 text-muted-foreground font-medium">CGPA</th>
                 <th className="pb-3 text-muted-foreground font-medium">Risk</th>
+                <th className="pb-3 text-muted-foreground font-medium">Actions</th>
               </tr>
             </thead>
             <tbody>
@@ -237,6 +239,15 @@ const FacultyDashboard = () => {
                   <td className="py-2.5 text-muted-foreground">{s.academics?.cgpa?.toFixed(2) || s.gpa}</td>
                   <td className="py-2.5">
                     <GlowingBadge level={s.riskLevel} pulse={s.riskLevel === 'high'}>{s.riskLevel}</GlowingBadge>
+                  </td>
+                  <td className="py-2.5">
+                    <button
+                      onClick={() => navigate(`/faculty/student/${s.id}`)}
+                      className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-primary/10 text-primary text-xs font-medium hover:bg-primary/20 transition-colors"
+                    >
+                      <Eye className="h-3.5 w-3.5" />
+                      View Details
+                    </button>
                   </td>
                 </tr>
               ))}

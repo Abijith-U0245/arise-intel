@@ -1,10 +1,11 @@
 import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 import { RoleLayout } from '@/components/arise/RoleLayout';
 import { StatCard } from '@/components/arise/StatCard';
 import { GlowingBadge } from '@/components/arise/GlowingBadge';
 import { AdminNotificationAnalytics } from '@/components/arise/AdminNotificationAnalytics';
 import { RiskEventSimulator } from '@/components/arise/RiskEventSimulator';
-import { departments, classes, allStudents, allFaculty, getRiskDistribution, getCollegeStats } from '@/data/mockData';
+import { departments, allStudents, getRiskDistribution, getCollegeStats } from '@/data/mockData';
 import { Users, GraduationCap, Building2, AlertTriangle, BarChart3, Settings, Shield, Activity, TrendingUp, BookOpen } from 'lucide-react';
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, BarChart, Bar, XAxis, YAxis, CartesianGrid } from 'recharts';
 
@@ -18,6 +19,7 @@ const navItems = [
 ];
 
 const AdminDashboard = () => {
+  const navigate = useNavigate();
   const stats = getCollegeStats();
   const dist = getRiskDistribution(allStudents);
 
@@ -295,24 +297,36 @@ const AdminDashboard = () => {
       >
         <h3 className="section-title mb-4">Quick Actions</h3>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-          <button className="p-4 rounded-xl bg-secondary/30 hover:bg-secondary/50 transition-colors text-left">
+          <button 
+            onClick={() => navigate('/admin/add-student')}
+            className="p-4 rounded-xl bg-secondary/30 hover:bg-secondary/50 transition-colors text-left"
+          >
             <Users className="h-5 w-5 text-primary mb-2" />
             <p className="text-sm font-medium text-foreground">Add Student</p>
             <p className="text-xs text-muted-foreground">Enroll new student</p>
           </button>
-          <button className="p-4 rounded-xl bg-secondary/30 hover:bg-secondary/50 transition-colors text-left">
+          <button 
+            onClick={() => navigate('/admin/add-hod')}
+            className="p-4 rounded-xl bg-secondary/30 hover:bg-secondary/50 transition-colors text-left"
+          >
             <GraduationCap className="h-5 w-5 text-accent mb-2" />
-            <p className="text-sm font-medium text-foreground">Add Faculty</p>
-            <p className="text-xs text-muted-foreground">Add new faculty</p>
+            <p className="text-sm font-medium text-foreground">Add HOD</p>
+            <p className="text-xs text-muted-foreground">Assign HOD role</p>
           </button>
-          <button className="p-4 rounded-xl bg-secondary/30 hover:bg-secondary/50 transition-colors text-left">
+          <button 
+            onClick={() => navigate('/admin/add-department')}
+            className="p-4 rounded-xl bg-secondary/30 hover:bg-secondary/50 transition-colors text-left"
+          >
             <Building2 className="h-5 w-5 text-green-400 mb-2" />
             <p className="text-sm font-medium text-foreground">Add Department</p>
             <p className="text-xs text-muted-foreground">Create department</p>
           </button>
-          <button className="p-4 rounded-xl bg-secondary/30 hover:bg-secondary/50 transition-colors text-left">
+          <button 
+            onClick={() => navigate('/admin/analytics')}
+            className="p-4 rounded-xl bg-secondary/30 hover:bg-secondary/50 transition-colors text-left"
+          >
             <BarChart3 className="h-5 w-5 text-orange-400 mb-2" />
-            <p className="text-sm font-medium text-foreground">Generate Report</p>
+            <p className="text-sm font-medium text-foreground">View Analytics</p>
             <p className="text-xs text-muted-foreground">Export analytics</p>
           </button>
         </div>
