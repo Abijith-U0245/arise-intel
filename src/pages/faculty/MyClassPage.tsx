@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 import { RoleLayout } from '@/components/arise/RoleLayout';
 import { StatCard } from '@/components/arise/StatCard';
 import { GlowingBadge } from '@/components/arise/GlowingBadge';
@@ -16,6 +17,7 @@ const navItems = [
 
 const MyClassPage = () => {
   const { user } = useAuth();
+  const navigate = useNavigate();
   const faculty = allFaculty.find(f => f.email === user?.email) || allFaculty[0];
   // Find a class where faculty is assigned (using first class for demo)
   const assignedClass = classes[0];
@@ -96,7 +98,10 @@ const MyClassPage = () => {
               </div>
             </div>
 
-            <button className="w-full px-3 py-2 rounded-lg bg-secondary hover:bg-secondary/80 transition-colors text-sm font-medium flex items-center justify-center gap-2">
+            <button 
+              onClick={() => navigate(`/faculty/student/${student.id}`)}
+              className="w-full px-3 py-2 rounded-lg bg-secondary hover:bg-secondary/80 transition-colors text-sm font-medium flex items-center justify-center gap-2"
+            >
               View Details
               <ChevronRight className="h-4 w-4" />
             </button>

@@ -887,7 +887,21 @@ export function getStudentCompetitions(_studentId: string) {
 export function getRiskAnalytics(studentId: string) {
   const student = allStudents.find(s => s.id === studentId || s.erpId === studentId);
   if (!student) return null;
-  return student.riskAnalytics;
+  
+  const riskAnalytics = student.riskAnalytics;
+  
+  // Map riskFactors array to factors object expected by the component
+  const factors = {
+    academic: riskAnalytics.riskFactors.find(f => f.name.includes('IA') || f.name.includes('Score'))?.score || 30,
+    attendance: riskAnalytics.riskFactors.find(f => f.name.includes('Attendance'))?.score || 30,
+    engagement: riskAnalytics.riskFactors.find(f => f.name.includes('Assignment'))?.score || 30,
+    sentiment: riskAnalytics.riskFactors.find(f => f.name.includes('Sentiment'))?.score || 30,
+  };
+  
+  return {
+    ...riskAnalytics,
+    factors,
+  };
 }
 
 // Demo accounts summary for login page
