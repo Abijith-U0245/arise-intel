@@ -6,11 +6,14 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { Navbar } from "@/components/arise/Navbar";
 import ErrorBoundary from "@/components/ErrorBoundary";
 import { AuthProvider, useAuth, getRolePath } from "@/contexts/AuthContext";
+import { NotificationProvider } from "@/contexts/NotificationContext";
 
 // Public pages
 import Index from "./pages/Index";
 import Login from "./pages/Login";
 import NotFound from "./pages/NotFound";
+import Features from "./pages/Features";
+import About from "./pages/About";
 
 // Admin pages
 import AdminDashboard from "./pages/admin/AdminDashboard";
@@ -65,6 +68,8 @@ const AppRoutes = () => (
     {/* Public routes */}
     <Route path="/" element={<><Navbar /><Index /></>} />
     <Route path="/login" element={<AuthRedirect />} />
+    <Route path="/features" element={<><Navbar /><Features /></>} />
+    <Route path="/about" element={<><Navbar /><About /></>} />
 
     {/* Admin routes */}
     <Route path="/admin/dashboard" element={<ProtectedRoute allowedRoles={['admin']}><AdminDashboard /></ProtectedRoute>} />
@@ -116,7 +121,9 @@ const App = () => (
         <Sonner />
         <BrowserRouter>
           <AuthProvider>
-            <AppRoutes />
+            <NotificationProvider>
+              <AppRoutes />
+            </NotificationProvider>
           </AuthProvider>
         </BrowserRouter>
       </TooltipProvider>

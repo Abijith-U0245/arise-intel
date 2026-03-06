@@ -1,6 +1,7 @@
 import { ReactNode } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
+import { NotificationBell } from './NotificationBell';
 import { cn } from '@/lib/utils';
 import { Brain, LogOut, ChevronLeft, ChevronRight, Activity } from 'lucide-react';
 import { LucideIcon } from 'lucide-react';
@@ -112,7 +113,10 @@ export function RoleLayout({ children, navItems, roleLabel }: RoleLayoutProps) {
             <Activity className="h-3 w-3" />
             <span>Live</span>
           </div>
-          <p className="text-xs text-muted-foreground">AWS + Hyperledger Fabric</p>
+          <div className="flex items-center gap-4">
+            <NotificationBell />
+            <p className="text-xs text-muted-foreground">AWS + Hyperledger Fabric</p>
+          </div>
         </header>
         <div className="p-6">
           {children}

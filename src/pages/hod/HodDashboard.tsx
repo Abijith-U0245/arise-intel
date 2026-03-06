@@ -4,6 +4,8 @@ import { RoleLayout } from '@/components/arise/RoleLayout';
 import { StatCard } from '@/components/arise/StatCard';
 import { DepartmentOverviewPanel } from '@/components/arise/DepartmentOverviewPanel';
 import { ClassAnalyticsChart } from '@/components/arise/ClassAnalyticsChart';
+import { DepartmentAlertsWidget } from '@/components/arise/DepartmentAlertsWidget';
+import { RiskEventSimulator } from '@/components/arise/RiskEventSimulator';
 import { GlowingBadge } from '@/components/arise/GlowingBadge';
 import { getHODByEmail, getDepartmentStudents, getRiskDistribution, departments, classes, allFaculty, allStudents } from '@/data/mockData';
 import { Building2, Users, AlertTriangle, TrendingDown, BarChart3, Brain, GraduationCap, Target } from 'lucide-react';
@@ -88,6 +90,16 @@ const HodDashboard = () => {
       </div>
 
       {/* Main Analytics Grid */}
+      {/* Department Alerts and Simulator */}
+      <div className="grid lg:grid-cols-3 gap-4 mb-6">
+        <div className="lg:col-span-2">
+          <DepartmentAlertsWidget departmentName={dept?.name} />
+        </div>
+        <div className="lg:col-span-1">
+          <RiskEventSimulator />
+        </div>
+      </div>
+
       <div className="grid lg:grid-cols-3 gap-4 mb-6">
         {/* Department Risk Distribution */}
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="glass-panel p-6">

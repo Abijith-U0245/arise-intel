@@ -496,6 +496,76 @@ export interface Alert {
 }
 
 // ============================================================================
+// RISK ALERT NOTIFICATION SYSTEM
+// ============================================================================
+
+export type RiskEventType = 
+  | 'attendance_drop'
+  | 'low_ia_score'
+  | 'missed_assignment'
+  | 'negative_sentiment'
+  | 'low_engagement'
+  | 'missing_competition'
+  | 'risk_level_increase';
+
+export interface RiskEvent {
+  id: string;
+  studentId: string;
+  type: RiskEventType;
+  previousRisk: number;
+  currentRisk: number;
+  previousLevel: RiskLevel;
+  currentLevel: RiskLevel;
+  reason: string;
+  details: string;
+  timestamp: string;
+  metadata?: Record<string, unknown>;
+}
+
+export interface RiskNotification {
+  id: string;
+  eventId: string;
+  studentId: string;
+  studentName: string;
+  classId: string;
+  className: string;
+  department: string;
+  type: RiskEventType;
+  message: string;
+  riskLevel: RiskLevel;
+  riskScore: number;
+  timestamp: string;
+  read: boolean;
+  acknowledged: boolean;
+  assignedFaculty?: string;
+}
+
+export interface NotificationSummary {
+  totalAlerts: number;
+  unreadCount: number;
+  criticalCount: number;
+  highRiskCount: number;
+  monitorCount: number;
+  todayCount: number;
+  byDepartment: Record<string, number>;
+  byCategory: Record<RiskEventType, number>;
+}
+
+export type RiskThreshold = {
+  safe: number;      // 0-40
+  monitor: number;   // 41-65
+  highRisk: number;  // 66-85
+  critical: number;  // 86-100
+};
+
+export const DEFAULT_RISK_THRESHOLDS: RiskThreshold = {
+  safe: 40,
+  monitor: 65,
+  highRisk: 85,
+  critical: 100,
+};
+
+// ============================================================================
 // ENGAGEMENT METRICS
 // ============================================================================
 

@@ -4,6 +4,8 @@ import { RoleLayout } from '@/components/arise/RoleLayout';
 import { StatCard } from '@/components/arise/StatCard';
 import { GlowingBadge } from '@/components/arise/GlowingBadge';
 import { AttendanceHeatmap } from '@/components/arise/AttendanceHeatmap';
+import { RiskAlertsWidget } from '@/components/arise/RiskAlertsWidget';
+import { RiskEventSimulator } from '@/components/arise/RiskEventSimulator';
 import { getFacultyByEmail, getFacultyStudents, getRiskDistribution, classes, departments } from '@/data/mockData';
 import { Users, AlertTriangle, TrendingDown, MessageSquare, BarChart3, Calendar, GraduationCap, BookOpen } from 'lucide-react';
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, BarChart, Bar, XAxis, YAxis, CartesianGrid } from 'recharts';
@@ -88,6 +90,16 @@ const FacultyDashboard = () => {
         <StatCard icon={AlertTriangle} label="High Risk" value={dist.high + (dist.critical || 0)} accent="risk" delay={0.05} />
         <StatCard icon={TrendingDown} label="Monitor" value={dist.monitor} accent="monitor" delay={0.1} />
         <StatCard icon={Calendar} label="Avg Attendance" value={`${classInfo?.avgAttendance || 0}%`} accent="safe" delay={0.15} />
+      </div>
+
+      {/* Risk Alerts Widget and Simulator */}
+      <div className="grid lg:grid-cols-3 gap-4 mb-6">
+        <div className="lg:col-span-2">
+          <RiskAlertsWidget />
+        </div>
+        <div className="lg:col-span-1">
+          <RiskEventSimulator />
+        </div>
       </div>
 
       <div className="grid lg:grid-cols-3 gap-4 mb-6">

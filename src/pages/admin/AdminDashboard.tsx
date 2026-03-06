@@ -2,6 +2,8 @@ import { motion } from 'framer-motion';
 import { RoleLayout } from '@/components/arise/RoleLayout';
 import { StatCard } from '@/components/arise/StatCard';
 import { GlowingBadge } from '@/components/arise/GlowingBadge';
+import { AdminNotificationAnalytics } from '@/components/arise/AdminNotificationAnalytics';
+import { RiskEventSimulator } from '@/components/arise/RiskEventSimulator';
 import { departments, classes, allStudents, allFaculty, getRiskDistribution, getCollegeStats } from '@/data/mockData';
 import { Users, GraduationCap, Building2, AlertTriangle, BarChart3, Settings, Shield, Activity, TrendingUp, BookOpen } from 'lucide-react';
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, BarChart, Bar, XAxis, YAxis, CartesianGrid } from 'recharts';
@@ -141,6 +143,16 @@ const AdminDashboard = () => {
             </div>
           </div>
         </motion.div>
+      </div>
+
+      {/* Notification Analytics */}
+      <div className="grid lg:grid-cols-3 gap-4 mb-6">
+        <div className="lg:col-span-2">
+          <AdminNotificationAnalytics />
+        </div>
+        <div className="lg:col-span-1">
+          <RiskEventSimulator />
+        </div>
       </div>
 
       {/* Departments Overview */}
