@@ -141,9 +141,7 @@ git clone <repository-url>
 cd arise-intel
 
 # Install dependencies
-npm install
-
-# Start development server
+cd frontend && npm install && npm run development server
 npm run dev
 ```
 
